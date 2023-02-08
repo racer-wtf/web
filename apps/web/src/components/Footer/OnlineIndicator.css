@@ -1,0 +1,13 @@
+@keyframes blink {
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.online-indicator {
+  background-color: #92cc41;
+  width: 6px;
+  height: 6px;
+  margin: 1rem;
+  animation: blink 2s step-start 0s infinite;
+}

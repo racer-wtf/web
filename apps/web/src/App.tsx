@@ -1,9 +1,10 @@
-import Header from "./components/Header";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 import RainbowKitProvider from "./providers/RainbowkitProviders";
+import Leaderboard from "./components/Leaderboard";
 
 import "@rainbow-me/rainbowkit/styles.css";
-import Leaderboard from "./components/Leaderboard";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,8 @@ const styles: { [key: string]: React.CSSProperties } = {
   content: {
     minHeight: "100vh",
     width: 800,
+    display: "flex",
+    flexDirection: "column",
   },
 };
 
@@ -35,6 +38,7 @@ const App = () => {
         <div style={styles.content}>
           <Header />
           <RouterProvider router={router} />
+          <Footer />
         </div>
       </div>
     </RainbowKitProvider>

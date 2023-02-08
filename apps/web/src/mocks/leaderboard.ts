@@ -4,6 +4,10 @@ export const leaders = [
     value: 181,
   },
   {
+    label: '🤠',
+    value: 112,
+  },
+  {
     label: '✅',
     value: 102,
   },
