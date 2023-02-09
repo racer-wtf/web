@@ -13,7 +13,7 @@ const router = createBrowserRouter([
   },
 ]);
 
-const styles: { [key: string]: React.CSSProperties } = {
+const styles = {
   app: {
     backgroundColor: "#000",
     minHeight: "100vh",
@@ -29,7 +29,11 @@ const styles: { [key: string]: React.CSSProperties } = {
     display: "flex",
     flexDirection: "column",
   },
-};
+  description: {
+    marginTop: "1rem",
+    marginBottom: "1rem",
+  },
+} satisfies Record<string, React.CSSProperties>;
 
 const App = () => {
   return (
@@ -37,6 +41,10 @@ const App = () => {
       <div style={styles.app}>
         <div style={styles.content}>
           <Header />
+          <p style={styles.description}>
+            Ethereum's first hype market - <em>Emoji Racer</em>. Learn more
+            about racing <a href="#">here</a>.
+          </p>
           <RouterProvider router={router} />
           <Footer />
         </div>

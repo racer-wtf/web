@@ -2,20 +2,21 @@ import color from "color";
 import { useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useEmojiColor } from "../../hooks/useEmojiColor";
 import { useHover } from "../../hooks/useHover";
+import Button from "../Button";
+import Input from "../Input";
+import Modal from "../Modal";
 
-const styles: { [key: string]: React.CSSProperties } = {
+const styles = {
   row: {
     display: "flex",
     flexDirection: "row",
     gap: "1rem",
     width: "100%",
   },
-  label: {
+  emoji: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    width: 30,
-    height: 30,
     cursor: "pointer",
   },
   bar: {
@@ -43,19 +44,59 @@ const styles: { [key: string]: React.CSSProperties } = {
     right: -100,
     color: "#fff",
   },
+  modalContent: {
+    display: "grid",
+    gridTemplateColumns: "max-content auto",
+    alignItems: "start",
+    gap: "1rem",
+  },
+  modalContentDescription: {
+    width: "100%",
+    height: "100%",
+    display: "flex",
+    justifyContent: "space-between",
+  },
+} satisfies Record<string, React.CSSProperties>;
+
+interface EmojiProps {
+  emoji: string;
+  size: number;
+  backgroundColor: string;
+  onClick?: () => any;
+}
+
+const Emoji = ({ emoji, size, backgroundColor, onClick }: EmojiProps) => {
+  return (
+    <div
+      style={{
+        ...styles.emoji,
+        backgroundColor,
+        width: size,
+        height: size,
+      }}
+      onClick={onClick}
+    >
+      <span style={{ fontSize: size / 2 }}>{emoji}</span>
+    </div>
+  );
 };
 
-interface Props {
+interface BarProps {
+  emoji: string;
   label: string;
   value: number;
+  rank: number;
+  total: number;
   width: string;
 }
 
-const Bar = ({ label, value, width }: Props) => {
+const Bar = ({ emoji, label, value, rank, total, width }: BarProps) => {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [voteAmount, setVoteAmount] = useState(0);
   const [hoverRef, isHovered] = useHover<HTMLDivElement>();
   const barRef = useRef<HTMLDivElement>(null);
   const [barWidth, setBarWidth] = useState(0);
-  const emojiColor = useEmojiColor(label);
+  const emojiColor = useEmojiColor(emoji);
 
   useLayoutEffect(() => {
     setBarWidth(barRef.current?.offsetWidth || 0);
@@ -79,15 +120,69 @@ const Bar = ({ label, value, width }: Props) => {
 
   return (
     <div style={{ ...styles.row }} ref={hoverRef}>
-      <div
-        style={{
-          ...styles.label,
-          backgroundColor: labelColor,
-        }}
-        onClick={() => console.log("TODO - open modal or place bet")}
+      <Modal
+        open={modalOpen}
+        width="medium"
+        title="Place Vote"
+        onClose={() => setModalOpen(false)}
+        color={emojiColor}
       >
-        {label}
-      </div>
+        <div style={styles.modalContent}>
+          <Emoji emoji={emoji} size={100} backgroundColor={labelColor} />
+          <div style={styles.modalContentDescription}>
+            <div
+              style={{
+                width: "100%",
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <h2>{label}</h2>
+              <p style={{ marginLeft: 2 }}>{value} votes</p>
+              <p style={{ marginLeft: 2, marginTop: "auto" }}>
+                #{rank + 1} / {total}
+              </p>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                height: "100%",
+                flexDirection: "column",
+                justifyContent: "space-between",
+              }}
+            >
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+                  alignItems: "center",
+                  minWidth: 220,
+                }}
+              >
+                <p>{(voteAmount * 0.01 || 0).toFixed(2)} ETH</p>
+                <Input
+                  value={voteAmount.toString()}
+                  setValue={(value: string) => setVoteAmount(parseInt(value))}
+                  type="number"
+                  min="0"
+                />
+              </div>
+              <Button color={emojiColor} onClick={() => setModalOpen(false)}>
+                Vote
+              </Button>
+            </div>
+          </div>
+        </div>
+      </Modal>
+
+      <Emoji
+        emoji={emoji}
+        size={30}
+        backgroundColor={labelColor}
+        onClick={() => setModalOpen(true)}
+      />
+
       <span
         ref={barRef}
         style={{

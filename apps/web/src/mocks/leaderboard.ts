@@ -1,30 +1,42 @@
 export const leaders = [
   {
-    label: '🌸',
+    emoji: "🌸",
+    label: "Flower",
     value: 181,
   },
   {
-    label: '🤠',
+    emoji: "🤠",
+    label: "Cowboy",
     value: 112,
   },
   {
-    label: '✅',
+    emoji: "✅",
+    label: "Check",
     value: 102,
   },
   {
-    label: '🌶️',
+    emoji: "🌶️",
+    label: "Hot Pepper",
     value: 88,
   },
   {
-    label: '🫐',
+    emoji: "🫐",
+    label: "Blueberries",
     value: 40,
   },
   {
-    label: '🔥',
+    emoji: "🔥",
+    label: "Fire",
     value: 6,
   },
   {
-    label: '🌞',
+    emoji: "🌞",
+    label: "Sun",
     value: 2,
   },
-]
+  {
+    emoji: "🦠",
+    label: "Microbe",
+    value: 2,
+  },
+];

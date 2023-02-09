@@ -46,6 +46,12 @@ h6 {
   overflow-wrap: break-word;
 }
 
+h2 {
+  font-family: "Silkscreen", monospace;
+  line-height: 1.5rem;
+  margin-bottom: 2px;
+}
+
 #root,
 #__next {
   isolation: isolate;

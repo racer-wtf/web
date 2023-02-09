@@ -2,7 +2,7 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 import logo from "../assets/racer-white.svg";
 
-const styles: { [key: string]: React.CSSProperties } = {
+const styles = {
   header: {
     width: "100%",
     display: "flex",
@@ -11,7 +11,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     paddingTop: "1rem",
     paddingBottom: "1rem",
   },
-};
+} satisfies Record<string, React.CSSProperties>;
 
 const Header = () => {
   return (

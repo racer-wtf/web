@@ -1,8 +1,8 @@
 import "./OnlineIndicator.css";
 
-const styles: { [key: string]: React.CSSProperties } = {
+const styles = {
   indicator: { display: "flex", alignItems: "center" },
-};
+} satisfies Record<string, React.CSSProperties>;
 
 const Footer = () => {
   return (

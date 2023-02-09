@@ -1,0 +1,10 @@
+input,
+input:hover {
+  border: none;
+  padding: 4px 12px;
+  height: 40px;
+}
+
+input:focus {
+  outline: none;
+}

@@ -1,6 +1,6 @@
 import OnlineIndicator from "./OnlineIndicator";
 
-const styles: { [key: string]: React.CSSProperties } = {
+const styles = {
   footer: {
     width: 800,
     height: 46,
@@ -11,13 +11,15 @@ const styles: { [key: string]: React.CSSProperties } = {
     position: "fixed",
     bottom: 0,
   },
-};
+} satisfies Record<string, React.CSSProperties>;
 
 const Footer = () => {
   return (
     <div style={styles.footer}>
       <OnlineIndicator />
-      <a href="https://etherscan.io/" target="_blank">Etherscan</a>
+      <a href="https://etherscan.io/" target="_blank">
+        Etherscan
+      </a>
     </div>
   );
 };
