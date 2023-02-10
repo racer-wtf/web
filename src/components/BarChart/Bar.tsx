@@ -41,7 +41,7 @@ const styles = {
   barTextOverflow: {
     position: "absolute",
     top: 6,
-    right: -100,
+    right: -110,
     color: "#fff",
   },
   modalContent: {

@@ -25,6 +25,11 @@ export const leaders = [
     value: 40,
   },
   {
+    emoji: "🤍",
+    label: "White Heart",
+    value: 20,
+  },
+  {
     emoji: "🔥",
     label: "Fire",
     value: 6,
@@ -37,6 +42,11 @@ export const leaders = [
   {
     emoji: "🦠",
     label: "Microbe",
+    value: 2,
+  },
+  {
+    emoji: "🍆",
+    label: "Eggplant",
     value: 2,
   },
 ];

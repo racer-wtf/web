@@ -9,7 +9,6 @@ const styles = {
     justifyContent: "space-between",
     gap: "1rem",
     paddingTop: "1rem",
-    paddingBottom: "1rem",
   },
 } satisfies Record<string, React.CSSProperties>;
 
