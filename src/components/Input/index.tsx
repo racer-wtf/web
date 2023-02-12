@@ -1,5 +1,11 @@
 import "./index.css";
 
+const styles = {
+  input: {
+    backgroundColor: "#222",
+  },
+} satisfies Record<string, React.CSSProperties>;
+
 interface Props {
   value: string;
   setValue: (value: string) => any;
@@ -14,7 +20,9 @@ const Input = ({
     setValue(e.target.value);
   };
 
-  return <input {...props} value={value} onChange={onChange} />;
+  return (
+    <input {...props} value={value} onChange={onChange} style={styles.input} />
+  );
 };
 
 export default Input;
