@@ -23,6 +23,7 @@ const styles = {
   overlayMobile: {
     alignItems: "flex-end",
     borderBottom: "none",
+    transform: "translateZ(0)", // This is required for content to render under the URL bar on iOS
   },
   modal: {
     backgroundColor: "#000",
