@@ -3,6 +3,7 @@ const styles = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+    userSelect: "none",
   },
 } satisfies Record<string, React.CSSProperties>;
 

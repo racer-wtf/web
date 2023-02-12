@@ -1,6 +1,9 @@
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useMemo } from "react";
+import { RemoveScroll } from "react-remove-scroll";
+import { useBreakpoint } from "../../hooks/useBreakpoint";
 import Portal from "../Portal";
 import CloseButton from "./CloseButton";
+import Color from "color";
 import "./index.css";
 
 const styles = {
@@ -8,7 +11,7 @@ const styles = {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    position: "absolute",
+    position: "fixed",
     top: 0,
     left: 0,
     width: "100vw",
@@ -16,6 +19,10 @@ const styles = {
     background: "#000000dd",
     zIndex: 100,
     animation: "fadeIn 150ms ease",
+  },
+  overlayMobile: {
+    alignItems: "flex-end",
+    borderBottom: "none",
   },
   modal: {
     backgroundColor: "#000",
@@ -54,6 +61,15 @@ const stopPropagation: React.MouseEventHandler<unknown> = (event) =>
   event.stopPropagation();
 
 const Modal = ({ open, onClose, width, title, children, color }: Props) => {
+  const isMobile = useBreakpoint(580);
+  const borderColor = useMemo(
+    () =>
+      Color(color).luminosity() < 0.1
+        ? Color(color).mix(Color("#fff")).string()
+        : color,
+    [color]
+  );
+
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) =>
       open && event.key === "Escape" && onClose();
@@ -69,25 +85,32 @@ const Modal = ({ open, onClose, width, title, children, color }: Props) => {
 
   return (
     <Portal>
-      <div
-        style={{ ...styles.overlay, display: open ? "flex" : "none" }}
-        onClick={handleBackdropClick}
-      >
+      <RemoveScroll>
         <div
           style={{
-            ...styles.modal,
-            width: widthMap[width],
-            border: `1px solid ${color}`,
+            ...styles.overlay,
+            ...(isMobile ? styles.overlayMobile : {}),
           }}
-          onClick={stopPropagation}
+          onClick={handleBackdropClick}
         >
-          <div style={styles.top}>
-            <h2>{title}</h2>
-            <CloseButton onClick={onClose} color={color} />
+          <div
+            style={{
+              ...styles.modal,
+              width: widthMap[width],
+              ...(isMobile
+                ? { borderTop: `1px solid ${borderColor}` }
+                : { border: `1px solid ${borderColor}` }),
+            }}
+            onClick={stopPropagation}
+          >
+            <div style={styles.top}>
+              <h2>{title}</h2>
+              <CloseButton onClick={onClose} color={color} />
+            </div>
+            {children}
           </div>
-          {children}
         </div>
-      </div>
+      </RemoveScroll>
     </Portal>
   );
 };

@@ -16,7 +16,6 @@ interface Props {
 
 const Chart = ({ data }: Props) => {
   const maxValue = data[0] ? data[0].value : 0;
-  console.log("maxValue", maxValue);
 
   return (
     <div style={styles.chart}>

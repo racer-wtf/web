@@ -19,11 +19,12 @@ interface Props {
 }
 
 const CloseButton = ({ color = "#fff", onClick }: Props) => {
-  const backgroundColor = Color(color).alpha(0.2).string();
+  const xColor = Color(color).mix(Color("#fff")).string();
+  const backgroundColor = Color(xColor).alpha(0.2).string();
 
   return (
     <div
-      style={{ ...styles.closeButton, color, backgroundColor }}
+      style={{ ...styles.closeButton, color: xColor, backgroundColor }}
       onClick={onClick}
     >
       <Close />

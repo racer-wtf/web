@@ -14,9 +14,7 @@ const Input = ({
     setValue(e.target.value);
   };
 
-  return (
-    <input type={props.type} value={value} onChange={onChange} {...props} />
-  );
+  return <input {...props} value={value} onChange={onChange} />;
 };
 
 export default Input;

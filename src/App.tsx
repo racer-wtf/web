@@ -5,6 +5,7 @@ import RainbowKitProvider from "./providers/RainbowkitProviders";
 import Leaderboard from "./components/Leaderboard";
 
 import "@rainbow-me/rainbowkit/styles.css";
+import { useBreakpoint } from "./hooks/useBreakpoint";
 
 const router = createBrowserRouter([
   {
@@ -22,10 +23,17 @@ const styles = {
     flexDirection: "column",
     alignItems: "center",
     fontFamily: "SFMono,ui-monospace,monospace",
+    overflowX: "hidden",
+    overflowY: "auto",
+    paddingBottom: 54,
+  },
+  appMobile: {
+    paddingLeft: 20,
+    paddingRight: 20,
   },
   content: {
-    minHeight: "100vh",
-    width: 800,
+    width: "100%",
+    maxWidth: 800,
     display: "flex",
     flexDirection: "column",
   },
@@ -36,18 +44,30 @@ const styles = {
 } satisfies Record<string, React.CSSProperties>;
 
 const App = () => {
+  const isMobile = useBreakpoint();
+
   return (
     <RainbowKitProvider>
-      <div style={styles.app}>
+      <div
+        style={{
+          ...styles.app,
+          ...(isMobile ? styles.appMobile : {}),
+        }}
+      >
+        <Header />
         <div style={styles.content}>
-          <Header />
-          <p style={styles.description}>
+          <p
+            style={{
+              ...styles.description,
+              ...(isMobile ? { textAlign: "center" } : {}),
+            }}
+          >
             Ethereum's first hype market - <em>Emoji Racer</em>. Learn more
             about racing <a href="#">here</a>.
           </p>
           <RouterProvider router={router} />
-          <Footer />
         </div>
+        <Footer />
       </div>
     </RainbowKitProvider>
   );

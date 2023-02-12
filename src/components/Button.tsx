@@ -16,17 +16,28 @@ interface Props {
   children: React.ReactNode;
 }
 
-const Button = ({ color = "#fff", onClick, children }: Props) => {
+const Button = ({
+  color = "#fff",
+  onClick,
+  children,
+  ...props
+}: Props & Partial<React.ButtonHTMLAttributes<HTMLButtonElement>>) => {
   const textColor = Color(color).mix(Color("#fff")).string();
-  const backgroundColor = Color(color).alpha(0.2).string();
+  const backgroundColor = Color(textColor).alpha(0.2).string();
 
   return (
-    <div
-      style={{ ...styles.button, color: textColor, backgroundColor }}
+    <button
+      {...props}
+      style={{
+        ...props.style,
+        ...styles.button,
+        color: textColor,
+        backgroundColor,
+      }}
       onClick={onClick}
     >
       {children}
-    </div>
+    </button>
   );
 };
 

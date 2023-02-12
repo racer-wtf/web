@@ -1,5 +1,6 @@
 import color from "color";
 import { useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useBreakpoint } from "../../hooks/useBreakpoint";
 import { useEmojiColor } from "../../hooks/useEmojiColor";
 import { useHover } from "../../hooks/useHover";
 import Button from "../Button";
@@ -40,10 +41,17 @@ const styles = {
   },
   modalContent: {
     display: "grid",
-    gridTemplateColumns: "max-content auto",
+    gridTemplateAreas: "'emoji description button'",
+    gridTemplateColumns: "max-content 3fr 1fr",
+    gridTemplateRows: "1fr",
     alignItems: "start",
     gap: "1rem",
     fontFamily: "SFMono, ui-monospace, monospace",
+  },
+  modalContentMobile: {
+    gridTemplateAreas: "'emoji description' 'button button'",
+    gridTemplateColumns: "auto 1fr",
+    gridTemplateRows: "1fr 1fr",
   },
   modalContentDescription: {
     width: "100%",
@@ -63,8 +71,9 @@ interface BarProps {
 }
 
 const Bar = ({ emoji, label, value, rank, total, width }: BarProps) => {
+  const isMobile = useBreakpoint(580);
   const [modalOpen, setModalOpen] = useState(false);
-  const [voteAmount, setVoteAmount] = useState(0);
+  const [voteAmount, setVoteAmount] = useState(1);
   const [hoverRef, isHovered] = useHover<HTMLDivElement>();
   const barRef = useRef<HTMLDivElement>(null);
   const [barWidth, setBarWidth] = useState(0);
@@ -99,7 +108,12 @@ const Bar = ({ emoji, label, value, rank, total, width }: BarProps) => {
         onClose={() => setModalOpen(false)}
         color={emojiColor}
       >
-        <div style={styles.modalContent}>
+        <div
+          style={{
+            ...styles.modalContent,
+            ...(isMobile ? styles.modalContentMobile : {}),
+          }}
+        >
           <Emoji emoji={emoji} size={100} backgroundColor={labelColor} />
           <div style={styles.modalContentDescription}>
             <div
@@ -116,35 +130,36 @@ const Bar = ({ emoji, label, value, rank, total, width }: BarProps) => {
                 #{rank + 1} / {total}
               </p>
             </div>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              height: "100%",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              gridArea: "button",
+            }}
+          >
             <div
               style={{
-                display: "flex",
-                height: "100%",
-                flexDirection: "column",
-                justifyContent: "space-between",
+                display: "grid",
+                gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+                alignItems: "center",
+                minWidth: 220,
               }}
             >
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
-                  alignItems: "center",
-                  minWidth: 220,
-                }}
-              >
-                <p>{(voteAmount * 0.01 || 0).toFixed(2)} ETH</p>
-                <Input
-                  value={voteAmount.toString()}
-                  setValue={(value: string) => setVoteAmount(parseInt(value))}
-                  type="number"
-                  min="0"
-                  max="100000"
-                />
-              </div>
-              <Button color={emojiColor} onClick={() => setModalOpen(false)}>
-                Vote
-              </Button>
+              <p>{(voteAmount * 0.01 || 0).toFixed(2)} ETH</p>
+              <Input
+                value={voteAmount.toString()}
+                setValue={(value: string) => setVoteAmount(parseInt(value))}
+                type="number"
+                min="1"
+                max="100000"
+              />
             </div>
+            <Button color={emojiColor} onClick={() => setModalOpen(false)}>
+              Vote
+            </Button>
           </div>
         </div>
       </Modal>
@@ -169,7 +184,7 @@ const Bar = ({ emoji, label, value, rank, total, width }: BarProps) => {
           <p
             style={{
               ...styles.barText,
-              ...(barWidth < 100 ? styles.barTextOverflow : {}),
+              ...(barWidth < 140 ? styles.barTextOverflow : {}),
             }}
           >
             {value} votes
