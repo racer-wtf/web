@@ -15,7 +15,7 @@ const styles = {
     top: 0,
     left: 0,
     width: "100vw",
-    height: "100vh",
+    height: "100%",
     background: "#000000dd",
     zIndex: 100,
     animation: "fadeIn 150ms ease",
@@ -23,7 +23,6 @@ const styles = {
   overlayMobile: {
     alignItems: "flex-end",
     borderBottom: "none",
-    transform: "translateZ(0)", // This is required for content to render under the URL bar on iOS
   },
   modal: {
     backgroundColor: "#000",
