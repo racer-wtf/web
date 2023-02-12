@@ -10,6 +10,11 @@ export const leaders = [
     value: 112,
   },
   {
+    emoji: "▶",
+    label: "Black Right Pointing Arrow",
+    value: 112,
+  },
+  {
     emoji: "✅",
     label: "Check",
     value: 102,

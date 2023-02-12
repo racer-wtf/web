@@ -1,4 +1,5 @@
 import { useCallback, useEffect } from "react";
+import Portal from "../Portal";
 import CloseButton from "./CloseButton";
 import "./index.css";
 
@@ -64,26 +65,30 @@ const Modal = ({ open, onClose, width, title, children, color }: Props) => {
 
   const handleBackdropClick = useCallback(() => onClose(), [onClose]);
 
+  if (!open) return null;
+
   return (
-    <div
-      style={{ ...styles.overlay, display: open ? "flex" : "none" }}
-      onClick={handleBackdropClick}
-    >
+    <Portal>
       <div
-        style={{
-          ...styles.modal,
-          width: widthMap[width],
-          border: `1px solid ${color}`,
-        }}
-        onClick={stopPropagation}
+        style={{ ...styles.overlay, display: open ? "flex" : "none" }}
+        onClick={handleBackdropClick}
       >
-        <div style={styles.top}>
-          <h2>{title}</h2>
-          <CloseButton onClick={onClose} color={color} />
+        <div
+          style={{
+            ...styles.modal,
+            width: widthMap[width],
+            border: `1px solid ${color}`,
+          }}
+          onClick={stopPropagation}
+        >
+          <div style={styles.top}>
+            <h2>{title}</h2>
+            <CloseButton onClick={onClose} color={color} />
+          </div>
+          {children}
         </div>
-        {children}
       </div>
-    </div>
+    </Portal>
   );
 };
 

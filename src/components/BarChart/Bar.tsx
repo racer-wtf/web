@@ -3,6 +3,7 @@ import { useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useEmojiColor } from "../../hooks/useEmojiColor";
 import { useHover } from "../../hooks/useHover";
 import Button from "../Button";
+import Emoji from "../Emoji";
 import Input from "../Input";
 import Modal from "../Modal";
 
@@ -11,21 +12,13 @@ const styles = {
     display: "flex",
     flexDirection: "row",
     gap: "1rem",
-    width: "100%",
-  },
-  emoji: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
     cursor: "pointer",
   },
   bar: {
-    flex: "grow",
     height: 30,
     display: "flex",
     alignItems: "center",
     justifyContent: "end",
-    cursor: "default",
     position: "relative",
   },
   barText: {
@@ -37,6 +30,7 @@ const styles = {
     overflow: "hidden",
     whiteSpace: "nowrap",
     textOverflow: "ellipsis",
+    userSelect: "none",
   },
   barTextOverflow: {
     position: "absolute",
@@ -49,6 +43,7 @@ const styles = {
     gridTemplateColumns: "max-content auto",
     alignItems: "start",
     gap: "1rem",
+    fontFamily: "SFMono, ui-monospace, monospace",
   },
   modalContentDescription: {
     width: "100%",
@@ -57,29 +52,6 @@ const styles = {
     justifyContent: "space-between",
   },
 } satisfies Record<string, React.CSSProperties>;
-
-interface EmojiProps {
-  emoji: string;
-  size: number;
-  backgroundColor: string;
-  onClick?: () => any;
-}
-
-const Emoji = ({ emoji, size, backgroundColor, onClick }: EmojiProps) => {
-  return (
-    <div
-      style={{
-        ...styles.emoji,
-        backgroundColor,
-        width: size,
-        height: size,
-      }}
-      onClick={onClick}
-    >
-      <span style={{ fontSize: size / 2 }}>{emoji}</span>
-    </div>
-  );
-};
 
 interface BarProps {
   emoji: string;
@@ -119,7 +91,7 @@ const Bar = ({ emoji, label, value, rank, total, width }: BarProps) => {
   }, [barColor]);
 
   return (
-    <div style={{ ...styles.row }} ref={hoverRef}>
+    <>
       <Modal
         open={modalOpen}
         width="medium"
@@ -166,6 +138,7 @@ const Bar = ({ emoji, label, value, rank, total, width }: BarProps) => {
                   setValue={(value: string) => setVoteAmount(parseInt(value))}
                   type="number"
                   min="0"
+                  max="100000"
                 />
               </div>
               <Button color={emojiColor} onClick={() => setModalOpen(false)}>
@@ -176,32 +149,34 @@ const Bar = ({ emoji, label, value, rank, total, width }: BarProps) => {
         </div>
       </Modal>
 
-      <Emoji
-        emoji={emoji}
-        size={30}
-        backgroundColor={labelColor}
-        onClick={() => setModalOpen(true)}
-      />
+      <div ref={hoverRef} style={styles.row} onClick={() => setModalOpen(true)}>
+        <Emoji
+          emoji={emoji}
+          size={30}
+          backgroundColor={labelColor}
+          onClick={() => setModalOpen(true)}
+        />
 
-      <span
-        ref={barRef}
-        style={{
-          ...styles.bar,
-          backgroundColor: barColor,
-          color: textColor,
-          width,
-        }}
-      >
-        <p
+        <span
+          ref={barRef}
           style={{
-            ...styles.barText,
-            ...(barWidth < 100 ? styles.barTextOverflow : {}),
+            ...styles.bar,
+            backgroundColor: barColor,
+            color: textColor,
+            width,
           }}
         >
-          {value} votes
-        </p>
-      </span>
-    </div>
+          <p
+            style={{
+              ...styles.barText,
+              ...(barWidth < 100 ? styles.barTextOverflow : {}),
+            }}
+          >
+            {value} votes
+          </p>
+        </span>
+      </div>
+    </>
   );
 };
 
