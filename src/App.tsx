@@ -1,16 +1,41 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Banner from "./components/Banner";
+import About from "./components/About";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import RainbowKitProvider from "./providers/RainbowkitProviders";
 import Leaderboard from "./components/Leaderboard";
+import Rewards from "./components/Rewards";
+import NotFound from "./components/NotFound";
+import { useBreakpoint } from "./hooks/useBreakpoint";
 
 import "@rainbow-me/rainbowkit/styles.css";
-import { useBreakpoint } from "./hooks/useBreakpoint";
 
 const router = createBrowserRouter([
   {
     path: "/",
+    element: (
+      <>
+        <Banner />
+        <Leaderboard />
+      </>
+    ),
+  },
+  {
+    path: "/rewards",
+    element: <Rewards />,
+  },
+  {
+    path: "/about",
+    element: <About />,
+  },
+  {
+    path: "/leaderboard",
     element: <Leaderboard />,
+  },
+  {
+    path: "*",
+    element: <NotFound />,
   },
 ]);
 
@@ -37,10 +62,6 @@ const styles = {
     display: "flex",
     flexDirection: "column",
   },
-  description: {
-    marginTop: "1rem",
-    marginBottom: "1rem",
-  },
 } satisfies Record<string, React.CSSProperties>;
 
 const App = () => {
@@ -56,15 +77,6 @@ const App = () => {
       >
         <Header />
         <div style={styles.content}>
-          <p
-            style={{
-              ...styles.description,
-              ...(isMobile ? { textAlign: "center" } : {}),
-            }}
-          >
-            Ethereum's first hype market - <em>Emoji Racer</em>. Learn more
-            about racing <a href="#">here</a>.
-          </p>
           <RouterProvider router={router} />
         </div>
         <Footer />

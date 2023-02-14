@@ -184,7 +184,7 @@ const Bar = ({ emoji, label, value, rank, total, width }: BarProps) => {
           <p
             style={{
               ...styles.barText,
-              ...(barWidth < 140 ? styles.barTextOverflow : {}),
+              ...(barWidth < 150 ? styles.barTextOverflow : {}),
             }}
           >
             {value} votes

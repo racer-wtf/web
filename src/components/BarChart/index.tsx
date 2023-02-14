@@ -14,7 +14,7 @@ interface Props {
   data: Node[];
 }
 
-const Chart = ({ data }: Props) => {
+const BarChart = ({ data }: Props) => {
   const maxValue = data[0] ? data[0].value : 0;
 
   return (
@@ -34,4 +34,4 @@ const Chart = ({ data }: Props) => {
   );
 };
 
-export default Chart;
+export default BarChart;

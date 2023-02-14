@@ -4,7 +4,7 @@ const styles = {
   stats: {
     display: "grid",
     gridTemplateAreas: "'blocks votes payout'",
-    gridTemplateColumns: "3fr 2fr 2fr",
+    gridTemplateColumns: "2fr 1fr 1fr",
     gridTemplateRows: "1fr",
     gap: "1rem",
   },

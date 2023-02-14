@@ -1,7 +1,8 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 
-import logo from "../assets/racer-white.svg";
-import { useBreakpoint } from "../hooks/useBreakpoint";
+import logo from "../../assets/racer-white.svg";
+import { useBreakpoint } from "../../hooks/useBreakpoint";
+import RewardsIndicator from "./RewardsIndicator";
 
 const styles = {
   header: {
@@ -10,17 +11,22 @@ const styles = {
     display: "flex",
     justifyContent: "space-between",
     gap: "1rem",
-    paddingTop: "1rem",
+    padding: "1rem 0",
   },
   headerMobile: {
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
   },
+  userPanel: {
+    display: "flex",
+    gap: "1rem",
+    alignItems: "center",
+  },
 } satisfies Record<string, React.CSSProperties>;
 
 const Header = () => {
-  const isMobile = useBreakpoint(500);
+  const isMobile = useBreakpoint(550);
 
   return (
     <div
@@ -32,7 +38,10 @@ const Header = () => {
       <a href="/">
         <img src={logo} className="Racer logo" alt="logo" width={200} />
       </a>
-      <ConnectButton showBalance />
+      <div style={styles.userPanel}>
+        <RewardsIndicator />
+        <ConnectButton showBalance />
+      </div>
     </div>
   );
 };
