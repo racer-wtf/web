@@ -2,7 +2,12 @@ import { useEffect } from "react";
 import { useAccount } from "wagmi";
 import useWebsocketConnection, { ReadyState } from "react-use-websocket";
 import { environment } from "../utils/environment";
-import { useIsOnline, useOnlineCount, useSubscriptions } from "../store";
+import {
+  useIsOnline,
+  useOnlineCount,
+  useSubscriptions,
+  useLeaderboard,
+} from "../store";
 import { shallow } from "zustand/shallow";
 
 export const useWebsocket = () => {
@@ -44,6 +49,7 @@ export const useWebsocket = () => {
   }, [address]);
 
   const setOnlineCount = useOnlineCount((state) => state.setCount);
+  const setLeaderboard = useLeaderboard((state) => state.setLeaderboard);
 
   useEffect(() => {
     const message = lastMessage?.data;
@@ -60,7 +66,17 @@ export const useWebsocket = () => {
 
     switch (parsedMessage.type) {
       case "online":
-        setOnlineCount(parsedMessage.count);
+        if (parsedMessage.count) {
+          setOnlineCount(parsedMessage.count);
+        }
+
+      case "leaderboard":
+        if (
+          parsedMessage.leaderboard &&
+          Array.isArray(parsedMessage.leaderboard)
+        ) {
+          setLeaderboard(parsedMessage.leaderboard);
+        }
     }
   }, [lastMessage]);
 };

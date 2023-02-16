@@ -81,7 +81,7 @@ const Bar = ({ emoji, label, value, rank, total, width }: BarProps) => {
 
   useLayoutEffect(() => {
     setBarWidth(barRef.current?.offsetWidth || 0);
-  }, []);
+  }, [value]);
 
   const barColor = useMemo(() => {
     return isHovered

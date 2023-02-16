@@ -1,17 +1,12 @@
+import { Emoji } from "../../store";
 import Bar from "./Bar";
 
 const styles = {
   chart: { display: "flex", flexDirection: "column", gap: "1rem" },
 } satisfies Record<string, React.CSSProperties>;
 
-type Node = {
-  emoji: string;
-  label: string;
-  value: number;
-};
-
 interface Props {
-  data: Node[];
+  data: Emoji[];
 }
 
 const BarChart = ({ data }: Props) => {
@@ -19,7 +14,7 @@ const BarChart = ({ data }: Props) => {
 
   return (
     <div style={styles.chart}>
-      {data.map((node: Node, i) => (
+      {data.map((node: Emoji, i) => (
         <Bar
           value={node.value}
           label={node.label}

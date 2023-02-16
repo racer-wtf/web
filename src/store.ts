@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-type Subscription = "online" | "leaderboard";
+export type Subscription = "online" | "leaderboard";
 
 interface SubscriptionState {
   address?: string;
@@ -43,4 +43,20 @@ interface OnlineCount {
 export const useOnlineCount = create<OnlineCount>()((set) => ({
   count: 0,
   setCount: (count: number) => set({ count }),
+}));
+
+export type Emoji = {
+  emoji: string;
+  label: string;
+  value: number;
+};
+
+interface Leaderboard {
+  emojis: Emoji[];
+  setLeaderboard: (emojis: Emoji[]) => void;
+}
+
+export const useLeaderboard = create<Leaderboard>()((set) => ({
+  emojis: [],
+  setLeaderboard: (emojis: Emoji[]) => set({ emojis }),
 }));
