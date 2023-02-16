@@ -8,19 +8,23 @@ import Emoji from "../Emoji";
 import Input from "../Input";
 import Modal from "../Modal";
 
+const barSize = 30;
+
 const styles = {
   row: {
-    display: "flex",
-    flexDirection: "row",
+    display: "grid",
+    gridTemplateColumns: "auto 1fr",
     gap: "1rem",
+    width: "100%",
     cursor: "pointer",
   },
   bar: {
-    height: 30,
+    height: barSize,
     display: "flex",
     alignItems: "center",
     justifyContent: "end",
     position: "relative",
+    transition: "width 1s ease-in-out",
   },
   barText: {
     paddingRight: "1rem",
@@ -67,21 +71,21 @@ interface BarProps {
   value: number;
   rank: number;
   total: number;
-  width: string;
+  max: number;
 }
 
-const Bar = ({ emoji, label, value, rank, total, width }: BarProps) => {
+const Bar = ({ emoji, label, value, rank, total, max }: BarProps) => {
   const isMobile = useBreakpoint(580);
   const [modalOpen, setModalOpen] = useState(false);
   const [voteAmount, setVoteAmount] = useState(1);
-  const [hoverRef, isHovered] = useHover<HTMLDivElement>();
   const barRef = useRef<HTMLDivElement>(null);
+  const [hoverRef, isHovered] = useHover<HTMLDivElement>();
   const [barWidth, setBarWidth] = useState(0);
   const emojiColor = useEmojiColor(emoji);
 
   useLayoutEffect(() => {
-    setBarWidth(barRef.current?.offsetWidth || 0);
-  }, [value]);
+    setBarWidth((barRef.current?.offsetWidth || 0) * (value / max));
+  }, [value, max]);
 
   const barColor = useMemo(() => {
     return isHovered
@@ -164,32 +168,39 @@ const Bar = ({ emoji, label, value, rank, total, width }: BarProps) => {
         </div>
       </Modal>
 
-      <div ref={hoverRef} style={styles.row} onClick={() => setModalOpen(true)}>
+      <div
+        ref={hoverRef}
+        style={{
+          ...styles.row,
+        }}
+        onClick={() => setModalOpen(true)}
+      >
         <Emoji
           emoji={emoji}
-          size={30}
+          size={barSize}
           backgroundColor={labelColor}
           onClick={() => setModalOpen(true)}
         />
 
-        <span
-          ref={barRef}
-          style={{
-            ...styles.bar,
-            backgroundColor: barColor,
-            color: textColor,
-            width,
-          }}
-        >
-          <p
+        <div ref={barRef}>
+          <span
             style={{
-              ...styles.barText,
-              ...(barWidth < 150 ? styles.barTextOverflow : {}),
+              ...styles.bar,
+              backgroundColor: barColor,
+              color: textColor,
+              width: barWidth,
             }}
           >
-            {value} votes
-          </p>
-        </span>
+            <p
+              style={{
+                ...styles.barText,
+                ...(barWidth < 150 ? styles.barTextOverflow : {}),
+              }}
+            >
+              {value} votes
+            </p>
+          </span>
+        </div>
       </div>
     </>
   );

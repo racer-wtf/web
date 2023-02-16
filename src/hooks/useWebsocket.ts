@@ -69,6 +69,7 @@ export const useWebsocket = () => {
         if (parsedMessage.count) {
           setOnlineCount(parsedMessage.count);
         }
+        break;
 
       case "leaderboard":
         if (
@@ -77,6 +78,7 @@ export const useWebsocket = () => {
         ) {
           setLeaderboard(parsedMessage.leaderboard);
         }
+        break;
     }
   }, [lastMessage]);
 };

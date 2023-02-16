@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
 
 export type Subscription = "online" | "leaderboard";
 
@@ -56,7 +57,15 @@ interface Leaderboard {
   setLeaderboard: (emojis: Emoji[]) => void;
 }
 
-export const useLeaderboard = create<Leaderboard>()((set) => ({
-  emojis: [],
-  setLeaderboard: (emojis: Emoji[]) => set({ emojis }),
-}));
+export const useLeaderboard = create<Leaderboard>()(
+  persist(
+    (set) => ({
+      emojis: [],
+      setLeaderboard: (emojis: Emoji[]) => set({ emojis }),
+    }),
+    {
+      name: "racer.wtf::leaderboard",
+      storage: createJSONStorage(() => sessionStorage),
+    }
+  )
+);
