@@ -10,6 +10,7 @@ import NotFound from "./components/NotFound";
 import { useBreakpoint } from "./hooks/useBreakpoint";
 
 import "@rainbow-me/rainbowkit/styles.css";
+import { useWebsocket } from "./hooks/useWebsocket";
 
 const router = createBrowserRouter([
   {
@@ -66,6 +67,8 @@ const styles = {
 
 const App = () => {
   const isMobile = useBreakpoint();
+
+  useWebsocket();
 
   return (
     <RainbowKitProvider>

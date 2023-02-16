@@ -17,9 +17,12 @@ specifiers:
   react-dom: ^18.2.0
   react-remove-scroll: ^2.5.5
   react-router-dom: ^6.8.1
+  react-use-websocket: ^4.3.1
   typescript: ^4.9.3
   vite: ^4.1.0
   wagmi: ^0.9.0
+  zod: ^3.20.6
+  zustand: ^4.3.3
 
 dependencies:
   '@rainbow-me/rainbowkit': 0.8.1_amd2vhu6wj5bwjc7z6fg5hhc6m
@@ -29,7 +32,10 @@ dependencies:
   react-dom: 18.2.0_react@18.2.0
   react-remove-scroll: 2.5.5_3stiutgnnbnfnf3uowm5cip22i
   react-router-dom: 6.8.1_biqbaboplfbrettd7655fr4n2y
-  wagmi: 0.9.6_2dzizbiumm2rxcy6oufshvptim
+  react-use-websocket: 4.3.1_biqbaboplfbrettd7655fr4n2y
+  wagmi: 0.9.6_lv2irwtvodlhawpgpuvcefzuc4
+  zod: 3.20.6
+  zustand: 4.3.3_react@18.2.0
 
 devDependencies:
   '@babel/core': 7.20.12
@@ -978,7 +984,7 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-remove-scroll: 2.5.4_3stiutgnnbnfnf3uowm5cip22i
-      wagmi: 0.9.6_2dzizbiumm2rxcy6oufshvptim
+      wagmi: 0.9.6_lv2irwtvodlhawpgpuvcefzuc4
     transitivePeerDependencies:
       - '@types/react'
     dev: false
@@ -1302,7 +1308,7 @@ packages:
     dependencies:
       '@coinbase/wallet-sdk': 3.6.3_@babel+core@7.20.12
       '@ledgerhq/connect-kit-loader': 1.0.2
-      '@wagmi/core': 0.8.6_csl2d2s4snexpf3shgckqtfxte
+      '@wagmi/core': 0.8.6_wwuplq2lj5fvqozyosqevhxy3a
       '@walletconnect/ethereum-provider': 1.8.0
       abitype: 0.1.8_typescript@4.9.5
       ethers: 5.7.2
@@ -1317,7 +1323,7 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@wagmi/core/0.8.6_csl2d2s4snexpf3shgckqtfxte:
+  /@wagmi/core/0.8.6_wwuplq2lj5fvqozyosqevhxy3a:
     resolution: {integrity: sha512-z1Sg/gNJGv8qlorYWkjK6f+nXhLfQ/VRxMoqXt0rsTEjZVJlIC5JldQ7v0RIlDA++QQgYn8UG2IJ2kr7oVbbhQ==}
     peerDependencies:
       '@coinbase/wallet-sdk': '>=3.6.0'
@@ -1333,7 +1339,7 @@ packages:
       '@wagmi/chains': 0.1.7
       '@wagmi/connectors': 0.1.2_24jgugvf5mrevttw5vs24bkhsm
       '@walletconnect/ethereum-provider': 1.8.0
-      abitype: 0.2.5_typescript@4.9.5
+      abitype: 0.2.5_smsy4negu7uja64s32ifnoozrm
       ethers: 5.7.2
       eventemitter3: 4.0.7
       zustand: 4.3.3_react@18.2.0
@@ -1575,7 +1581,7 @@ packages:
       typescript: 4.9.5
     dev: false
 
-  /abitype/0.2.5_typescript@4.9.5:
+  /abitype/0.2.5_smsy4negu7uja64s32ifnoozrm:
     resolution: {integrity: sha512-t1iiokWYpkrziu4WL2Gb6YdGvaP9ZKs7WnA39TI8TsW2E99GVRgDPW/xOKhzoCdyxOYt550CNYEFluCwGaFHaA==}
     engines: {pnpm: '>=7'}
     peerDependencies:
@@ -1586,6 +1592,7 @@ packages:
         optional: true
     dependencies:
       typescript: 4.9.5
+      zod: 3.20.6
     dev: false
 
   /acorn-jsx/5.3.2_acorn@8.8.2:
@@ -3740,6 +3747,16 @@ packages:
       tslib: 2.5.0
     dev: false
 
+  /react-use-websocket/4.3.1_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-zHPLWrgcqydJaak2O5V9hiz4q2dwkwqNQqpgFVmSuPxLZdsZlnDs8DVHy3WtHH+A6ms/8aHIyX7+7ulOcrnR0Q==}
+    peerDependencies:
+      react: '>= 18.0.0'
+      react-dom: '>= 18.0.0'
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    dev: false
+
   /react/18.2.0:
     resolution: {integrity: sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==}
     engines: {node: '>=0.10.0'}
@@ -4260,7 +4277,7 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /wagmi/0.9.6_2dzizbiumm2rxcy6oufshvptim:
+  /wagmi/0.9.6_lv2irwtvodlhawpgpuvcefzuc4:
     resolution: {integrity: sha512-Y+ikhwyU7+iWHn/GbEkC42c0GBW+ZUzaxTQKyESun2yqrhnxQNhIZSSNnhqw1mws3bjDeUrUeEj3kk0ML6VbgQ==}
     peerDependencies:
       ethers: '>=5.5.1'
@@ -4270,9 +4287,9 @@ packages:
       '@tanstack/query-sync-storage-persister': 4.24.4
       '@tanstack/react-query': 4.24.4_biqbaboplfbrettd7655fr4n2y
       '@tanstack/react-query-persist-client': 4.24.4_pbzrecrhgj7fe7hddoo6lp43hu
-      '@wagmi/core': 0.8.6_csl2d2s4snexpf3shgckqtfxte
+      '@wagmi/core': 0.8.6_wwuplq2lj5fvqozyosqevhxy3a
       '@walletconnect/ethereum-provider': 1.8.0
-      abitype: 0.2.5_typescript@4.9.5
+      abitype: 0.2.5_smsy4negu7uja64s32ifnoozrm
       ethers: 5.7.2
       react: 18.2.0
       use-sync-external-store: 1.2.0_react@18.2.0
@@ -4479,6 +4496,10 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
     dev: true
+
+  /zod/3.20.6:
+    resolution: {integrity: sha512-oyu0m54SGCtzh6EClBVqDDlAYRz4jrVtKwQ7ZnsEmMI9HnzuZFj8QFwAY1M5uniIYACdGvv0PBWPF2kO0aNofA==}
+    dev: false
 
   /zustand/4.3.3_react@18.2.0:
     resolution: {integrity: sha512-x2jXq8S0kfLGNwGh87nhRfEc2eZy37tSatpSoSIN+O6HIaBhgQHSONV/F9VNrNcBcKQu/E80K1DeHDYQC/zCrQ==}
