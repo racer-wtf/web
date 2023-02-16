@@ -7,6 +7,8 @@ const getAvgHex = (color: number, total: number) =>
 
 export const useEmojiColor = (emoji: string) => {
   const avgColor = useMemo(() => {
+    if (!emoji) return "#000000";
+
     let totalPixels = 0;
     const colors = {
       red: 0,
@@ -16,12 +18,15 @@ export const useEmojiColor = (emoji: string) => {
     };
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
+
     if (!ctx) {
       return "#000000";
     }
+
     ctx.font = "30px Arial";
     ctx.fillText(emoji, 0, 28);
     const { data: imageData } = ctx.getImageData(0, 0, 30, 30);
+
     for (let i = 0; i < imageData.length; i += 4) {
       let [r, g, b, a] = imageData.slice(i, i + 4);
       if (a > 50) {
@@ -32,11 +37,13 @@ export const useEmojiColor = (emoji: string) => {
         colors.alpha += a;
       }
     }
+
     const r = getAvgHex(colors.red, totalPixels);
     const g = getAvgHex(colors.green, totalPixels);
     const b = getAvgHex(colors.blue, totalPixels);
 
     return "#" + r + g + b;
   }, [emoji]);
+
   return avgColor;
 };

@@ -48,7 +48,6 @@ export const useOnlineCount = create<OnlineCount>()((set) => ({
 
 export type Emoji = {
   emoji: string;
-  label: string;
   value: number;
 };
 

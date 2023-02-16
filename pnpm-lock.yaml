@@ -10,6 +10,7 @@ specifiers:
   '@types/react-dom': ^18.0.10
   '@vitejs/plugin-react-swc': ^3.0.0
   color: ^4.2.3
+  emoji.json: ^14.0.0
   eslint: ^8.33.0
   eslint-plugin-react: ^7.32.2
   ethers: '>=5.5.1 <6'
@@ -29,6 +30,7 @@ dependencies:
   '@formkit/auto-animate': 1.0.0-beta.6
   '@rainbow-me/rainbowkit': 0.8.1_amd2vhu6wj5bwjc7z6fg5hhc6m
   color: 4.2.3
+  emoji.json: 14.0.0
   ethers: 5.7.2
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
@@ -2209,6 +2211,10 @@ packages:
 
   /emoji-regex/8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
+    dev: false
+
+  /emoji.json/14.0.0:
+    resolution: {integrity: sha512-2rpEIAs1VDc6eHpqX3l1xpijXWu2F+zzj79+IyRu6wTcnsjQX4+vG43PxCk/2mQFB7e9MLuWl29g8hYd1DYI6Q==}
     dev: false
 
   /encode-utf8/1.0.3:

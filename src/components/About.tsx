@@ -57,7 +57,6 @@ const About = () => {
         data={[
           {
             emoji: "🔥",
-            label: "Fire",
             value: 2,
           },
         ]}
@@ -70,12 +69,10 @@ const About = () => {
         data={[
           {
             emoji: "🔥",
-            label: "Fire",
             value: 2,
           },
           {
             emoji: "❄️",
-            label: "Snowflake",
             value: 2,
           },
         ]}
@@ -87,12 +84,10 @@ const About = () => {
         data={[
           {
             emoji: "❄️",
-            label: "Snowflake",
             value: 4,
           },
           {
             emoji: "🔥",
-            label: "Fire",
             value: 2,
           },
         ]}
@@ -105,12 +100,10 @@ const About = () => {
         data={[
           {
             emoji: "🔥",
-            label: "Fire",
             value: 8,
           },
           {
             emoji: "❄️",
-            label: "Snowflake",
             value: 4,
           },
         ]}

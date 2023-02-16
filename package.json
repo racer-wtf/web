@@ -12,6 +12,7 @@
     "@formkit/auto-animate": "1.0.0-beta.6",
     "@rainbow-me/rainbowkit": "^0.8.1",
     "color": "^4.2.3",
+    "emoji.json": "^14.0.0",
     "ethers": ">=5.5.1 <6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

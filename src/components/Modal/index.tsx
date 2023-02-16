@@ -54,13 +54,13 @@ interface Props {
   width: ModalWidth;
   title?: string;
   children: React.ReactNode;
-  color: string;
+  color?: string;
 }
 
 const stopPropagation: React.MouseEventHandler<unknown> = (event) =>
   event.stopPropagation();
 
-const Modal = ({ open, onClose, width, title, children, color }: Props) => {
+const Modal = ({ open, onClose, width, title, children, color = "#222" }: Props) => {
   const isMobile = useBreakpoint(580);
   const borderColor = useMemo(
     () =>

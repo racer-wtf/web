@@ -66,9 +66,8 @@ const styles = {
 } satisfies Record<string, React.CSSProperties>;
 
 const App = () => {
-  const isMobile = useBreakpoint();
-
   useWebsocket();
+  const isMobile = useBreakpoint();
 
   return (
     <RainbowKitProvider>
