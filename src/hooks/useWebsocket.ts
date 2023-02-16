@@ -2,10 +2,21 @@ import { useEffect } from "react";
 import { useAccount } from "wagmi";
 import useWebsocketConnection, { ReadyState } from "react-use-websocket";
 import { environment } from "../utils/environment";
-import { useOnlineCount, useSubscriptions } from "../store";
+import { useIsOnline, useOnlineCount, useSubscriptions } from "../store";
 import { shallow } from "zustand/shallow";
 
 export const useWebsocket = () => {
+  // websocket connection will always retry every 3 seconds
+  const { sendMessage, lastMessage, readyState } = useWebsocketConnection(
+    environment.VITE_WEBSOCKET_SERVER,
+    {
+      shouldReconnect: (_) => true,
+      reconnectAttempts: Infinity,
+      reconnectInterval: 3000,
+    }
+  );
+
+  const setIsOnline = useIsOnline((state) => state.setIsOnline);
   const subscriptions = useSubscriptions(
     (state) => ({
       subscriptions: state.subscriptions,
@@ -13,24 +24,24 @@ export const useWebsocket = () => {
     }),
     shallow
   );
+
+  // any time the subscription changes, send a message to the server
+  useEffect(() => {
+    if (readyState === ReadyState.OPEN) {
+      setIsOnline(true);
+      sendMessage(JSON.stringify(subscriptions));
+    } else {
+      setIsOnline(false);
+    }
+  }, [readyState, subscriptions]);
+
   const setAddress = useSubscriptions((state) => state.setAddress);
   const { address } = useAccount();
-  const { sendMessage, lastMessage, readyState } = useWebsocketConnection(
-    environment.VITE_WEBSOCKET_SERVER
-  );
 
   // if the signer changes, update the address
   useEffect(() => {
     setAddress(address);
   }, [address]);
-
-  // any time the subscription changes, send a message to the server
-  useEffect(() => {
-    if (readyState === ReadyState.OPEN) {
-      console.log("subscriptions changed:", subscriptions);
-      sendMessage(JSON.stringify(subscriptions));
-    }
-  }, [readyState, subscriptions]);
 
   const setOnlineCount = useOnlineCount((state) => state.setCount);
 

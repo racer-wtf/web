@@ -25,6 +25,16 @@ export const useSubscriptions = create<SubscriptionState>()((set) => ({
     })),
 }));
 
+interface Online {
+  isOnline: boolean;
+  setIsOnline: (isOnline: boolean) => void;
+}
+
+export const useIsOnline = create<Online>((set) => ({
+  isOnline: false,
+  setIsOnline: (isOnline: boolean) => set({ isOnline }),
+}));
+
 interface OnlineCount {
   count: number;
   setCount: (count: number) => void;

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useOnlineCount, useSubscriptions } from "../../store";
+import { useOnlineCount, useSubscriptions, useIsOnline } from "../../store";
 import { shallow } from "zustand/shallow";
 
 import "./OnlineIndicator.css";
@@ -9,6 +9,7 @@ const styles = {
 } satisfies Record<string, React.CSSProperties>;
 
 const Footer = () => {
+  const isOnline = useIsOnline((state) => state.isOnline);
   const onlineCount = useOnlineCount((state) => state.count);
   const { addSubscription, removeSubscription } = useSubscriptions(
     (state) => ({
@@ -25,8 +26,11 @@ const Footer = () => {
 
   return (
     <div style={styles.indicator}>
-      <span className="online-indicator" />
-      {onlineCount} online
+      <span
+        className="connection-status"
+        style={{ backgroundColor: isOnline ? "green" : "gray" }}
+      />
+      {isOnline ? `${onlineCount} online` : "Offline"}
     </div>
   );
 };
