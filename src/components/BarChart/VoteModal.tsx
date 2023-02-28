@@ -16,6 +16,8 @@ import racerABI from "../../contracts/Racer.json";
 import { environment } from "../../utils/environment";
 import { toBytes4 } from "../../utils/bytes";
 import { BigNumber } from "ethers";
+import { useCycle } from "../../store";
+import Ellipsis from "../Ellipsis";
 
 const styles = {
   modalContent: {
@@ -75,34 +77,57 @@ const VoteModal = ({
     return Color(emojiColor).alpha(0.6).string();
   }, [emojiColor]);
 
+  const cycleId = useCycle((state) => state.id);
+
   const { config } = usePrepareContractWrite({
     address: environment.VITE_CONTRACT_ADDRESS,
     abi: racerABI,
-    functionName: "placeBet",
-    args: [0, toBytes4(emoji_)],
-    enabled: Boolean(emoji_),
+    functionName: "placeVote",
+    args: [cycleId, toBytes4(emoji_)],
+    enabled: Boolean(emoji_) && Boolean(voteAmount),
     overrides: {
       value: BigNumber.from("10000000000000000").mul(voteAmount),
     },
   });
   const { data: tx, write } = useContractWrite(config);
 
-  const { data, isLoading, isSuccess } = useWaitForTransaction({
+  const { isLoading, isSuccess, isError } = useWaitForTransaction({
+    enabled: Boolean(tx),
+    chainId: 11155111,
     hash: tx?.hash,
+    onSuccess: () => {
+      setTimeout(() => {
+        setModalOpen(false);
+      }, 3000);
+    },
+    onError: (error) => {
+      console.log(error);
+      setTimeout(() => {
+        setModalOpen(false);
+      }, 3000);
+    },
   });
 
-  useEffect(() => {
-    if (isSuccess) {
-      console.log(data);
-    }
-  }, [isSuccess, data]);
+  const isSubmitted = isLoading || isSuccess || isError;
 
   return (
     <Modal
       width="medium"
-      title={editable ? "Place Custom Vote" : "Place Vote"}
+      title={
+        isSuccess ? (
+          "Vote Sent!"
+        ) : isError ? (
+          "Vote Error"
+        ) : isLoading ? (
+          <Ellipsis text="Sending Transaction" />
+        ) : editable ? (
+          "Place Custom Vote"
+        ) : (
+          "Place Vote"
+        )
+      }
       onClose={() => setModalOpen(false)}
-      color={emojiColor}
+      color={isSuccess ? "green" : isError ? "red" : emojiColor}
     >
       <div
         style={{
@@ -116,6 +141,7 @@ const VoteModal = ({
           size={100}
           backgroundColor={labelColor}
           editable={editable}
+          loading={isLoading}
         />
         <div style={styles.modalContentDescription}>
           <div
@@ -153,16 +179,17 @@ const VoteModal = ({
             <p>{(voteAmount * 0.01 || 0).toFixed(2)} ETH</p>
             <Input
               value={voteAmount.toString()}
-              setValue={(value: string) => setVoteAmount(parseInt(value))}
+              setValue={(value: string) => setVoteAmount(parseInt(value) || 0)}
               type="number"
               min="1"
               max="100000"
+              disabled={isSubmitted}
             />
           </div>
           <Button
-            color={emojiColor}
+            color={isLoading ? "#000" : emojiColor}
             onClick={() => write?.()}
-            disabled={!emoji_ || isLoading}
+            disabled={!emoji_ || isSubmitted}
           >
             Vote
           </Button>

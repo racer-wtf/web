@@ -1,4 +1,4 @@
-import { createElement, useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import emojiDict from "emoji.json";
 
 const styles = {
@@ -7,6 +7,9 @@ const styles = {
     justifyContent: "center",
     alignItems: "center",
     userSelect: "none",
+  },
+  emojiLoading: {
+    animation: "spin 5s linear infinite",
   },
   input: {
     backgroundColor: "transparent",
@@ -24,6 +27,7 @@ interface EmojiProps {
   backgroundColor: string;
   onClick?: () => any;
   editable?: boolean;
+  loading?: boolean;
 }
 
 const byteSize = (str: string) => new Blob([str]).size;
@@ -35,6 +39,7 @@ const Emoji = ({
   backgroundColor,
   onClick,
   editable = false,
+  loading = false,
 }: EmojiProps) => {
   const handleEmojiChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (setEmoji) {
@@ -78,7 +83,14 @@ const Emoji = ({
           ref={ref}
         />
       ) : (
-        <span style={{ fontSize: size / 2 }}>{emoji}</span>
+        <span
+          style={{
+            fontSize: size / 2,
+            ...(loading ? styles.emojiLoading : {}),
+          }}
+        >
+          {emoji}
+        </span>
       )}
     </div>
   );

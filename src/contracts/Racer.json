@@ -5,74 +5,6 @@
       {
         "indexed": true,
         "internalType": "address",
-        "name": "placer",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "id",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "reward",
-        "type": "uint256"
-      }
-    ],
-    "name": "BetClaimed",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "placer",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "betId",
-        "type": "uint256"
-      },
-      {
-        "indexed": true,
-        "internalType": "uint256",
-        "name": "cycleId",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "bytes4",
-        "name": "symbol",
-        "type": "bytes4"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "placement",
-        "type": "uint256"
-      }
-    ],
-    "name": "BetPlaced",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
         "name": "creator",
         "type": "address"
       },
@@ -105,14 +37,82 @@
     "type": "event"
   },
   {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "placer",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "reward",
+        "type": "uint256"
+      }
+    ],
+    "name": "VoteClaimed",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "placer",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "voteId",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "cycleId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes4",
+        "name": "symbol",
+        "type": "bytes4"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "placement",
+        "type": "uint256"
+      }
+    ],
+    "name": "VotePlaced",
+    "type": "event"
+  },
+  {
     "inputs": [
       {
         "internalType": "uint256[]",
-        "name": "betIds",
+        "name": "voteIds",
         "type": "uint256[]"
       }
     ],
-    "name": "batchClaimFunds",
+    "name": "batchClaimVotes",
     "outputs": [],
     "stateMutability": "payable",
     "type": "function"
@@ -130,11 +130,11 @@
         "type": "bytes4[]"
       }
     ],
-    "name": "batchPlaceBet",
+    "name": "batchPlaceVote",
     "outputs": [
       {
         "internalType": "uint256[]",
-        "name": "betIds",
+        "name": "voteIds",
         "type": "uint256[]"
       }
     ],
@@ -145,26 +145,7 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "betsToCycles",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "betId",
+        "name": "voteId",
         "type": "uint256"
       }
     ],
@@ -187,7 +168,7 @@
       },
       {
         "internalType": "uint64",
-        "name": "betPrice",
+        "name": "votePrice",
         "type": "uint64"
       }
     ],
@@ -200,76 +181,6 @@
       }
     ],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "betId",
-        "type": "uint256"
-      }
-    ],
-    "name": "getBet",
-    "outputs": [
-      {
-        "components": [
-          {
-            "internalType": "bytes4",
-            "name": "symbol",
-            "type": "bytes4"
-          },
-          {
-            "internalType": "bool",
-            "name": "claimed",
-            "type": "bool"
-          },
-          {
-            "internalType": "uint56",
-            "name": "amount",
-            "type": "uint56"
-          },
-          {
-            "internalType": "address",
-            "name": "placer",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "placement",
-            "type": "uint256"
-          }
-        ],
-        "internalType": "struct Racer.Bet",
-        "name": "",
-        "type": "tuple"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "cycleId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "betId",
-        "type": "uint256"
-      }
-    ],
-    "name": "getBetReward",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -339,6 +250,76 @@
     "inputs": [
       {
         "internalType": "uint256",
+        "name": "voteId",
+        "type": "uint256"
+      }
+    ],
+    "name": "getVote",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "bytes4",
+            "name": "symbol",
+            "type": "bytes4"
+          },
+          {
+            "internalType": "bool",
+            "name": "claimed",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint56",
+            "name": "amount",
+            "type": "uint56"
+          },
+          {
+            "internalType": "address",
+            "name": "placer",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "placement",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct Racer.Vote",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "cycleId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "voteId",
+        "type": "uint256"
+      }
+    ],
+    "name": "getVoteReward",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
         "name": "cycleId",
         "type": "uint256"
       },
@@ -348,15 +329,34 @@
         "type": "bytes4"
       }
     ],
-    "name": "placeBet",
+    "name": "placeVote",
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "betId",
+        "name": "voteId",
         "type": "uint256"
       }
     ],
     "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "votesToCycles",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   }
 ]

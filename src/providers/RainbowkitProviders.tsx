@@ -17,10 +17,14 @@ import {
 } from "@rainbow-me/rainbowkit/wallets";
 import { configureChains, createClient, WagmiConfig } from "wagmi";
 import { sepolia } from "wagmi/chains";
-import { publicProvider } from "wagmi/providers/public";
+import { infuraProvider } from "wagmi/providers/infura";
 import { CustomAvatar } from "../components/CustomAvatar";
+import { environment } from "../utils/environment";
 
-const { chains, provider } = configureChains([sepolia], [publicProvider()]);
+const { chains, provider } = configureChains(
+  [sepolia],
+  [infuraProvider({ apiKey: environment.VITE_INFURA_KEY })]
+);
 
 const connectors = connectorsForWallets([
   {

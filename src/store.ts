@@ -86,3 +86,13 @@ export const useLeaderboard = create<Leaderboard>()(
     }
   )
 );
+
+interface Cycle {
+  id: number;
+  setId: (id: number) => void;
+}
+
+export const useCycle = create<Cycle>()((set) => ({
+  id: 0,
+  setId: (id: number) => set({ id }),
+}));

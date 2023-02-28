@@ -7,6 +7,7 @@ import {
   useOnlineCount,
   useSubscriptions,
   useLeaderboard,
+  useCycle,
 } from "../store";
 import { shallow } from "zustand/shallow";
 
@@ -51,6 +52,8 @@ export const useWebsocket = () => {
   const setOnlineCount = useOnlineCount((state) => state.setCount);
   const setLeaderboard = useLeaderboard((state) => state.setLeaderboard);
 
+  const setCycleId = useCycle((state) => state.setId);
+
   useEffect(() => {
     const message = lastMessage?.data;
     if (message && !lastMessage.type) {
@@ -80,6 +83,9 @@ export const useWebsocket = () => {
             metadata: parsedMessage.metadata,
             emojis: parsedMessage.leaderboard,
           });
+        }
+        if (parsedMessage.cycle_id) {
+          setCycleId(parsedMessage.cycle_id);
         }
         break;
     }

@@ -51,7 +51,7 @@ const widthMap: Record<ModalWidth, number> = {
 interface Props {
   onClose: () => void;
   width: ModalWidth;
-  title?: string;
+  title?: JSX.Element | string;
   children: React.ReactNode;
   color?: string;
 }

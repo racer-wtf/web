@@ -6,6 +6,7 @@ const environmentSchema = z.object({
     .default("development"),
   VITE_WEBSOCKET_SERVER: z.string().url(),
   VITE_CONTRACT_ADDRESS: z.string().length(42),
+  VITE_INFURA_KEY: z.string(),
 });
 
 const environment = environmentSchema.parse(import.meta.env);

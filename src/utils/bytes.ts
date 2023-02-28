@@ -1,6 +1,5 @@
 export const toBytes4 = (str: string) => {
-  // TODO(user): Use native implementations if/when available
-  var out = [],
+  var out = [0, 0, 0, 0],
     p = 0;
   for (var i = 0; i < str.length; i++) {
     var c = str.charCodeAt(i);
