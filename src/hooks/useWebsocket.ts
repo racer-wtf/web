@@ -76,7 +76,10 @@ export const useWebsocket = () => {
           parsedMessage.leaderboard &&
           Array.isArray(parsedMessage.leaderboard)
         ) {
-          setLeaderboard(parsedMessage.leaderboard);
+          setLeaderboard({
+            metadata: parsedMessage.metadata,
+            emojis: parsedMessage.leaderboard,
+          });
         }
         break;
     }

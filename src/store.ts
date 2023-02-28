@@ -51,16 +51,34 @@ export type Emoji = {
   value: number;
 };
 
+export type Metadata = {
+  blocks_remaining: number;
+  votes: number;
+  payout: string;
+};
+
 interface Leaderboard {
+  metadata: Metadata;
   emojis: Emoji[];
-  setLeaderboard: (emojis: Emoji[]) => void;
+  setLeaderboard: (_: { emojis: Emoji[]; metadata: Metadata }) => void;
 }
 
 export const useLeaderboard = create<Leaderboard>()(
   persist(
     (set) => ({
       emojis: [],
-      setLeaderboard: (emojis: Emoji[]) => set({ emojis }),
+      metadata: {
+        blocks_remaining: 0,
+        votes: 0,
+        payout: "0",
+      },
+      setLeaderboard: ({
+        emojis,
+        metadata,
+      }: {
+        emojis: Emoji[];
+        metadata: Metadata;
+      }) => set({ emojis, metadata }),
     }),
     {
       name: "racer.wtf::leaderboard",

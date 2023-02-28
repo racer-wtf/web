@@ -38,7 +38,6 @@ const styles = {
   barTextOverflow: {
     position: "absolute",
     top: 6,
-    right: -110,
     color: "#fff",
   },
 } satisfies Record<string, React.CSSProperties>;
@@ -49,9 +48,10 @@ interface BarProps {
   rank: number;
   total: number;
   max: number;
+  active?: boolean;
 }
 
-const Bar = ({ emoji, value, rank, total, max }: BarProps) => {
+const Bar = ({ emoji, value, rank, total, max, active = true }: BarProps) => {
   const windowSize = useWindowSize();
   const [modalOpen, setModalOpen] = useState(false);
   const barRef = useRef<HTMLDivElement>(null);
@@ -60,7 +60,6 @@ const Bar = ({ emoji, value, rank, total, max }: BarProps) => {
   const emojiColor = useEmojiColor(emoji);
 
   useLayoutEffect(() => {
-    // console.log(barRef.current?.clientWidth);
     setBarWidth((barRef.current?.clientWidth || 0) * (value / max));
   }, [value, max, windowSize]);
 
@@ -80,30 +79,33 @@ const Bar = ({ emoji, value, rank, total, max }: BarProps) => {
     return color(barColor).isLight() ? "#000" : "#fff";
   }, [barColor]);
 
+  const barTextRef = useRef<HTMLParagraphElement>(null);
+
   return (
     <>
-      <VoteModal
-        modalOpen={modalOpen}
-        setModalOpen={setModalOpen}
-        emoji={emoji}
-        value={value}
-        rank={rank}
-        total={total}
-        editable={false}
-      />
+      {modalOpen && (
+        <VoteModal
+          setModalOpen={active ? setModalOpen : () => {}}
+          emoji={emoji}
+          value={value}
+          rank={rank}
+          total={total}
+          editable={false}
+        />
+      )}
 
       <div
         ref={hoverRef}
         style={{
           ...styles.row,
         }}
-        onClick={() => setModalOpen(true)}
+        onClick={active ? () => setModalOpen(true) : () => {}}
       >
         <Emoji
           emoji={emoji}
           size={barSize}
           backgroundColor={labelColor}
-          onClick={() => setModalOpen(true)}
+          onClick={active ? () => setModalOpen(true) : () => {}}
         />
 
         <div ref={barRef}>
@@ -116,9 +118,15 @@ const Bar = ({ emoji, value, rank, total, max }: BarProps) => {
             }}
           >
             <p
+              ref={barTextRef}
               style={{
                 ...styles.barText,
-                ...(barWidth < 150 ? styles.barTextOverflow : {}),
+                ...(barWidth < 150
+                  ? {
+                      ...styles.barTextOverflow,
+                      right: (barTextRef.current?.offsetWidth ?? 110) * -1,
+                    }
+                  : {}),
               }}
             >
               {value} votes

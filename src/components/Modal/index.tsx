@@ -49,7 +49,6 @@ const widthMap: Record<ModalWidth, number> = {
 };
 
 interface Props {
-  open: boolean;
   onClose: () => void;
   width: ModalWidth;
   title?: string;
@@ -60,7 +59,7 @@ interface Props {
 const stopPropagation: React.MouseEventHandler<unknown> = (event) =>
   event.stopPropagation();
 
-const Modal = ({ open, onClose, width, title, children, color = "#222" }: Props) => {
+const Modal = ({ onClose, width, title, children, color = "#222" }: Props) => {
   const isMobile = useBreakpoint(580);
   const borderColor = useMemo(
     () =>
@@ -72,7 +71,7 @@ const Modal = ({ open, onClose, width, title, children, color = "#222" }: Props)
 
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) =>
-      open && event.key === "Escape" && onClose();
+      event.key === "Escape" && onClose();
 
     document.addEventListener("keydown", handleEscape);
 

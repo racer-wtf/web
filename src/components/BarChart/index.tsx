@@ -14,16 +14,18 @@ const styles = {
     cursor: "pointer",
     fontSize: 18,
     fontFamily: "'Silkscreen', monospace",
+    padding: "0.5rem",
   },
 } satisfies Record<string, React.CSSProperties>;
 
 interface Props {
-  data: EmojiType[];
+  emojis: EmojiType[];
+  active?: boolean;
 }
 
-const BarChart = ({ data }: Props) => {
-  const maxValue = Math.max(...data.map((d) => d.value));
-  const sortedData = data.sort((a, b) => b.value - a.value);
+const BarChart = ({ emojis, active = true }: Props) => {
+  const maxValue = Math.max(...emojis.map((d) => d.value));
+  const sortedData = emojis.sort((a, b) => b.value - a.value);
   const [parent] = useAutoAnimate({ duration: 1000 });
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -34,21 +36,20 @@ const BarChart = ({ data }: Props) => {
           value={node.value}
           emoji={node.emoji}
           rank={i}
-          total={data.length}
+          total={emojis.length}
           max={maxValue}
           key={node.emoji}
+          active={active}
         />
       ))}
 
-      <VoteModal
-        modalOpen={modalOpen}
-        setModalOpen={setModalOpen}
-        editable={true}
-      />
+      {modalOpen && <VoteModal setModalOpen={setModalOpen} editable={true} />}
 
-      <div style={styles.addButton} onClick={() => setModalOpen(true)}>
-        + Add
-      </div>
+      {active && (
+        <div style={styles.addButton} onClick={() => setModalOpen(true)}>
+          + New Vote
+        </div>
+      )}
     </div>
   );
 };

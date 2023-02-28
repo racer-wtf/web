@@ -54,7 +54,8 @@ const About = () => {
         <span style={styles.player1}>Player 1</span> places two votes for 🔥.{" "}
       </p>
       <BarChart
-        data={[
+        active={false}
+        emojis={[
           {
             emoji: "🔥",
             value: 2,
@@ -66,7 +67,8 @@ const About = () => {
         ❄️.
       </p>
       <BarChart
-        data={[
+        active={false}
+        emojis={[
           {
             emoji: "🔥",
             value: 2,
@@ -81,7 +83,8 @@ const About = () => {
         <span style={styles.player3}>Player 3</span> places two votes for ❄️.
       </p>
       <BarChart
-        data={[
+        active={false}
+        emojis={[
           {
             emoji: "❄️",
             value: 4,
@@ -97,7 +100,8 @@ const About = () => {
         for 🔥.
       </p>
       <BarChart
-        data={[
+        active={false}
+        emojis={[
           {
             emoji: "🔥",
             value: 8,

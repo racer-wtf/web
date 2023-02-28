@@ -60,6 +60,10 @@ button {
   border: none;
 }
 
+button:disabled {
+  cursor: default !important;
+}
+
 a,
 a:visited,
 a:hover,

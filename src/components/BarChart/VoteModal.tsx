@@ -1,4 +1,9 @@
 import Color from "color";
+import {
+  usePrepareContractWrite,
+  useContractWrite,
+  useWaitForTransaction,
+} from "wagmi";
 import { useEffect, useMemo, useState } from "react";
 import { useBreakpoint } from "../../hooks/useBreakpoint";
 import { useEmojiColor } from "../../hooks/useEmojiColor";
@@ -7,6 +12,10 @@ import Button from "../Button";
 import Emoji from "../Emoji";
 import Input from "../Input";
 import Modal from "../Modal";
+import racerABI from "../../contracts/Racer.json";
+import { environment } from "../../utils/environment";
+import { toBytes4 } from "../../utils/bytes";
+import { BigNumber } from "ethers";
 
 const styles = {
   modalContent: {
@@ -32,7 +41,6 @@ const styles = {
 } satisfies Record<string, React.CSSProperties>;
 
 interface Props {
-  modalOpen: boolean;
   setModalOpen: (value: boolean) => void;
   emoji?: string;
   value?: number;
@@ -42,7 +50,6 @@ interface Props {
 }
 
 const VoteModal = ({
-  modalOpen,
   setModalOpen,
   emoji,
   value = 0,
@@ -68,9 +75,30 @@ const VoteModal = ({
     return Color(emojiColor).alpha(0.6).string();
   }, [emojiColor]);
 
+  const { config } = usePrepareContractWrite({
+    address: environment.VITE_CONTRACT_ADDRESS,
+    abi: racerABI,
+    functionName: "placeBet",
+    args: [0, toBytes4(emoji_)],
+    enabled: Boolean(emoji_),
+    overrides: {
+      value: BigNumber.from("10000000000000000").mul(voteAmount),
+    },
+  });
+  const { data: tx, write } = useContractWrite(config);
+
+  const { data, isLoading, isSuccess } = useWaitForTransaction({
+    hash: tx?.hash,
+  });
+
+  useEffect(() => {
+    if (isSuccess) {
+      console.log(data);
+    }
+  }, [isSuccess, data]);
+
   return (
     <Modal
-      open={modalOpen}
       width="medium"
       title={editable ? "Place Custom Vote" : "Place Vote"}
       onClose={() => setModalOpen(false)}
@@ -131,7 +159,11 @@ const VoteModal = ({
               max="100000"
             />
           </div>
-          <Button color={emojiColor} onClick={() => setModalOpen(false)}>
+          <Button
+            color={emojiColor}
+            onClick={() => write?.()}
+            disabled={!emoji_ || isLoading}
+          >
             Vote
           </Button>
         </div>

@@ -1,4 +1,8 @@
+import { useMemo } from "react";
 import { useBreakpoint } from "../hooks/useBreakpoint";
+import { Metadata } from "../store";
+import humanizeDuration from "humanize-duration";
+import { formatEther } from "ethers/lib/utils.js";
 
 const styles = {
   stats: {
@@ -22,22 +26,37 @@ const styles = {
   },
 } satisfies Record<string, React.CSSProperties>;
 
-const Stats = () => {
+interface Props {
+  metadata: Metadata;
+}
+
+const Stats = ({ metadata }: Props) => {
   const isMobile = useBreakpoint();
+  const humanReadableBlocksRemaining = useMemo(
+    () =>
+      humanizeDuration(metadata.blocks_remaining * 12 * 1000, { largest: 2 }),
+    [metadata.blocks_remaining]
+  );
+  const humanReadablePayout = useMemo(
+    () => formatEther(metadata.payout),
+    [metadata.payout]
+  );
 
   return (
     <div style={{ ...styles.stats, ...(isMobile ? styles.statsMobile : {}) }}>
       <div style={{ ...styles.leftBorder, ...styles.blocks }}>
         <h2>Blocks Remaining</h2>
-        <p>10 (~3 minutes)</p>
+        <p>
+          {metadata.blocks_remaining} (~{humanReadableBlocksRemaining})
+        </p>
       </div>
       <div style={styles.leftBorder}>
         <h2>Votes</h2>
-        <p>234 total</p>
+        <p>{metadata.votes} total</p>
       </div>
       <div style={styles.leftBorder}>
         <h2>Payout</h2>
-        <p>12.4 ETH</p>
+        <p>{humanReadablePayout} ETH</p>
       </div>
     </div>
   );

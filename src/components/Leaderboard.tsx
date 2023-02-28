@@ -9,12 +9,17 @@ const styles = {
 
 const Leaderboard = () => {
   useSubscription("leaderboard");
-  const data = useLeaderboard((state) => state.emojis);
+  const metadata = useLeaderboard((state) => state.metadata);
+  const emojis = useLeaderboard((state) => state.emojis);
+
+  if (!metadata || !emojis) {
+    return null;
+  }
 
   return (
     <div style={styles.main}>
-      <Stats />
-      <BarChart data={data} />
+      <Stats metadata={metadata} />
+      <BarChart emojis={emojis} />
     </div>
   );
 };

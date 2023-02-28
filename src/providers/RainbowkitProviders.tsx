@@ -16,11 +16,11 @@ import {
   trustWallet,
 } from "@rainbow-me/rainbowkit/wallets";
 import { configureChains, createClient, WagmiConfig } from "wagmi";
-import { mainnet } from "wagmi/chains";
+import { sepolia } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
 import { CustomAvatar } from "../components/CustomAvatar";
 
-const { chains, provider } = configureChains([mainnet], [publicProvider()]);
+const { chains, provider } = configureChains([sepolia], [publicProvider()]);
 
 const connectors = connectorsForWallets([
   {

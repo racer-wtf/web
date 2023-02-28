@@ -5,6 +5,7 @@ specifiers:
   '@formkit/auto-animate': 1.0.0-beta.6
   '@rainbow-me/rainbowkit': ^0.8.1
   '@types/color': ^3.0.3
+  '@types/humanize-duration': ^3.27.1
   '@types/node': ^17.0.12
   '@types/react': ^18.0.27
   '@types/react-dom': ^18.0.10
@@ -14,6 +15,7 @@ specifiers:
   eslint: ^8.33.0
   eslint-plugin-react: ^7.32.2
   ethers: '>=5.5.1 <6'
+  humanize-duration: ^3.28.0
   prettier: ^2.8.4
   react: ^18.2.0
   react-dom: ^18.2.0
@@ -29,9 +31,11 @@ specifiers:
 dependencies:
   '@formkit/auto-animate': 1.0.0-beta.6
   '@rainbow-me/rainbowkit': 0.8.1_amd2vhu6wj5bwjc7z6fg5hhc6m
+  '@types/humanize-duration': 3.27.1
   color: 4.2.3
   emoji.json: 14.0.0
   ethers: 5.7.2
+  humanize-duration: 3.28.0
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-remove-scroll: 2.5.5_3stiutgnnbnfnf3uowm5cip22i
@@ -1212,6 +1216,10 @@ packages:
     resolution: {integrity: sha512-cdeYyv4KWoEgpBISTxWvqYsVy444DOqehiF3fM3ne10AmJ62RSyNkUnxMJXHQWRQQX2eR94m5y1IZyDwBjV9FQ==}
     dependencies:
       '@types/node': 17.0.45
+    dev: false
+
+  /@types/humanize-duration/3.27.1:
+    resolution: {integrity: sha512-K3e+NZlpCKd6Bd/EIdqjFJRFHbrq5TzPPLwREk5Iv/YoIjQrs6ljdAUCo+Lb2xFlGNOjGSE0dqsVD19cZL137w==}
     dev: false
 
   /@types/node/12.20.55:
@@ -2904,6 +2912,10 @@ packages:
       hash.js: 1.1.7
       minimalistic-assert: 1.0.1
       minimalistic-crypto-utils: 1.0.1
+    dev: false
+
+  /humanize-duration/3.28.0:
+    resolution: {integrity: sha512-jMAxraOOmHuPbffLVDKkEKi/NeG8dMqP8lGRd6Tbf7JgAeG33jjgPWDbXXU7ypCI0o+oNKJFgbSB9FKVdWNI2A==}
     dev: false
 
   /humanize-ms/1.2.1:
