@@ -187,7 +187,7 @@ const VoteModal = ({
             />
           </div>
           <Button
-            color={isLoading ? "#000" : emojiColor}
+            color={isSubmitted ? "#000" : emojiColor}
             onClick={() => write?.()}
             disabled={!emoji_ || isSubmitted}
           >

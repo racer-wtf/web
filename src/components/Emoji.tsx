@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import emojiDict from "emoji.json";
 
 const styles = {
@@ -17,6 +17,12 @@ const styles = {
     height: "100%",
     textAlign: "center",
     padding: 0,
+  },
+  error: {
+    color: "red",
+    position: "absolute",
+    bottom: 20,
+    fontSize: 10,
   },
 } satisfies Record<string, React.CSSProperties>;
 
@@ -41,10 +47,12 @@ const Emoji = ({
   editable = false,
   loading = false,
 }: EmojiProps) => {
+  const [error, setError] = useState(false);
+
   const handleEmojiChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (setEmoji) {
       if (byteSize(e.target.value) > 4) {
-        // TODO should probably show a toast error
+        setError(true);
         return;
       }
 
@@ -52,10 +60,12 @@ const Emoji = ({
         emojiDict.find((emoji) => emoji.char === e.target.value) ||
         e.target.value === ""
       ) {
+        setError(false);
         setEmoji(e.target.value);
       }
     }
   };
+  console.log(error);
 
   // for some reason autoFocus doesn't work on modal mounts without a delay
   const ref = useRef<HTMLInputElement>(null);
@@ -77,7 +87,11 @@ const Emoji = ({
     >
       {editable ? (
         <input
-          style={{ ...styles.input, fontSize: size / 2 }}
+          style={{
+            ...styles.input,
+            fontSize: size / 2,
+            ...(error ? { border: "1px solid red" } : {}),
+          }}
           value={emoji}
           onChange={handleEmojiChange}
           ref={ref}
@@ -92,6 +106,8 @@ const Emoji = ({
           {emoji}
         </span>
       )}
+
+      {error && <span style={styles.error}>Invalid emoji</span>}
     </div>
   );
 };

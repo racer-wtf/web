@@ -39,7 +39,7 @@ const Header = () => {
         <img src={logo} className="Racer logo" alt="logo" width={200} />
       </a>
       <div style={styles.userPanel}>
-        <RewardsIndicator />
+        {/* <RewardsIndicator /> */}
         <ConnectButton showBalance />
       </div>
     </div>

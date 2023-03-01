@@ -16,13 +16,13 @@ import {
   trustWallet,
 } from "@rainbow-me/rainbowkit/wallets";
 import { configureChains, createClient, WagmiConfig } from "wagmi";
-import { sepolia } from "wagmi/chains";
+import { goerli } from "wagmi/chains";
 import { infuraProvider } from "wagmi/providers/infura";
 import { CustomAvatar } from "../components/CustomAvatar";
 import { environment } from "../utils/environment";
 
 const { chains, provider } = configureChains(
-  [sepolia],
+  [goerli],
   [infuraProvider({ apiKey: environment.VITE_INFURA_KEY })]
 );
 

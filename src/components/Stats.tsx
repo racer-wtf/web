@@ -56,7 +56,7 @@ const Stats = ({ metadata }: Props) => {
       </div>
       <div style={styles.leftBorder}>
         <h2>Payout</h2>
-        <p>{humanReadablePayout} ETH</p>
+        <p>{humanReadablePayout} gETH</p>
       </div>
     </div>
   );
