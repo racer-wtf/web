@@ -101,7 +101,6 @@ const VoteModal = ({
       }, 3000);
     },
     onError: (error) => {
-      console.log(error);
       setTimeout(() => {
         setModalOpen(false);
       }, 3000);

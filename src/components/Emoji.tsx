@@ -65,7 +65,6 @@ const Emoji = ({
       }
     }
   };
-  console.log(error);
 
   // for some reason autoFocus doesn't work on modal mounts without a delay
   const ref = useRef<HTMLInputElement>(null);
